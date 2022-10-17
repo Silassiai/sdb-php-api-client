@@ -1,0 +1,23 @@
+{
+    "name": "silassiai/php-sbd-api-client",
+    "description": "PHP client library for the SDB API.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Silassiai\\PhpSbdApiClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Silas de Rooy",
+            "email": "silasderooy@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "guzzlehttp/psr7": "^1.7",
+        "guzzlehttp/guzzle": "~6.0|~7.0",
+        "symfony/cache": "^5.4"
+    }
+}
