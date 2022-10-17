@@ -4,6 +4,9 @@ PHP client library for the SDB API. This client lets you integrate with SDB.
 
 - Get all clients
 
+install:
+`composer require silassiai/php-sbd-api-client:dev-main`
+
 ```php
 require_once 'vendor/autoload.php';
 
