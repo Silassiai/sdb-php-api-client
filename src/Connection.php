@@ -149,7 +149,7 @@ class Connection
      */
     public function getAccessToken(): array
     {
-        return $this->cache->get('token', function (ItemInterface $item) {
+        return $this->cache->get($this->username . 'token', function (ItemInterface $item) {
             $newAccessToken = $this->getNewToken();
 
             $expiresAt = time() + ($newAccessToken->expires_in - 10);
