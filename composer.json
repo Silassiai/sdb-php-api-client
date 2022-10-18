@@ -1,5 +1,5 @@
 {
-    "name": "silassiai/php-sbd-api-client",
+    "name": "silassiai/sdb-php-api-client",
     "description": "PHP client library for the SDB API.",
     "type": "library",
     "license": "MIT",
