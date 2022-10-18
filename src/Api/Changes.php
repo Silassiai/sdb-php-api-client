@@ -15,6 +15,7 @@ class Changes extends SdbApi
      * @return array
      * @throws GuzzleException
      * @throws InvalidArgumentException
+     * @throws \JsonException
      */
     public function get(): array
     {

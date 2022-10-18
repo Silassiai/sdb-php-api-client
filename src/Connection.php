@@ -4,10 +4,13 @@ namespace Silassiai\PhpSbdApiClient;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Message;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use JsonException;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
+use Silassiai\PhpSbdApiClient\Exceptions\SdbClientException;
 use stdClass;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -187,14 +190,36 @@ class Connection
 
     /**
      * @param string $uri
-     * @return ResponseInterface
+     * @return array
      * @throws GuzzleException
      * @throws InvalidArgumentException
+     * @throws JsonException
      */
-    public function get(string $uri): ResponseInterface
+    public function get(string $uri): array
     {
-        return $this->client->send(
+
+        $response = $this->client->send(
             $this->createRequest('GET', $this->getBaseUrl() . 'api/' . $uri, null, [], [])
         );
+        return $this->parseResponse($response);
+    }
+
+    /**
+     * @throws JsonException
+     * @throws SdbClientException
+     */
+    public function parseResponse(Response $response): array
+    {
+        if ($response->getStatusCode() === 204) {
+            return [];
+        }
+
+        Message::rewindBody($response);
+        $responseBodyContent = $response->getBody()->getContents();
+        $resultArray = json_decode($responseBodyContent, true, 512, JSON_THROW_ON_ERROR);
+        if (!is_array($resultArray)) {
+            throw new SdbClientException('Json decode failed. Got response: ' . $responseBodyContent);
+        }
+        return $resultArray;
     }
 }

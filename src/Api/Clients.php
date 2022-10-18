@@ -13,10 +13,12 @@ class Clients extends SdbApi
     public const URI = 'clients';
 
     /**
+     * @return array
      * @throws GuzzleException
      * @throws InvalidArgumentException
+     * @throws \JsonException
      */
-    public function get(): ResponseInterface
+    public function get(): array
     {
         return $this->connection->get(self::URI);
     }
@@ -26,6 +28,19 @@ class Clients extends SdbApi
      * @return array
      * @throws GuzzleException
      * @throws InvalidArgumentException
+     * @throws \JsonException
+     */
+    public function getById(int $id)
+    {
+        return $this->connection->get(self::URI . '/' . $id);
+    }
+
+    /**
+     * @param int $id
+     * @return array
+     * @throws GuzzleException
+     * @throws InvalidArgumentException
+     * @throws \JsonException
      */
     public function getStakeholders(int $id): array
     {
